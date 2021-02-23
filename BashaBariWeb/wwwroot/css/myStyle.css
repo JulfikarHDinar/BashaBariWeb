@@ -1,0 +1,13 @@
+.header .header-logo-image {
+    width: 180px;
+    margin: 15px;
+}
+.header {
+    background: black;
+    opacity: .75;
+}
+
+    .header button {
+        background: white;
+    }
+
