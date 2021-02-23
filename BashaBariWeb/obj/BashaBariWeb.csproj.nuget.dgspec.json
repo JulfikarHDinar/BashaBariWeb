@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "G:\\Study and Projects\\OtherProjects\\BashaBariWeb\\BashaBariWeb\\BashaBariWeb.csproj": {}
+    "E:\\AUST\\3.2 semester\\ISD\\project\\BashaBariWeb\\BashaBariWeb\\BashaBariWeb.csproj": {}
   },
   "projects": {
-    "G:\\Study and Projects\\OtherProjects\\BashaBariWeb\\BashaBariWeb\\BashaBariWeb.csproj": {
+    "E:\\AUST\\3.2 semester\\ISD\\project\\BashaBariWeb\\BashaBariWeb\\BashaBariWeb.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Study and Projects\\OtherProjects\\BashaBariWeb\\BashaBariWeb\\BashaBariWeb.csproj",
+        "projectUniqueName": "E:\\AUST\\3.2 semester\\ISD\\project\\BashaBariWeb\\BashaBariWeb\\BashaBariWeb.csproj",
         "projectName": "BashaBariWeb",
-        "projectPath": "G:\\Study and Projects\\OtherProjects\\BashaBariWeb\\BashaBariWeb\\BashaBariWeb.csproj",
-        "packagesPath": "C:\\Users\\Julfikar\\.nuget\\packages\\",
-        "outputPath": "G:\\Study and Projects\\OtherProjects\\BashaBariWeb\\BashaBariWeb\\obj\\",
+        "projectPath": "E:\\AUST\\3.2 semester\\ISD\\project\\BashaBariWeb\\BashaBariWeb\\BashaBariWeb.csproj",
+        "packagesPath": "C:\\Users\\adnan\\.nuget\\packages\\",
+        "outputPath": "E:\\AUST\\3.2 semester\\ISD\\project\\BashaBariWeb\\BashaBariWeb\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Julfikar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\adnan\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
