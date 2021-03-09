@@ -1,4 +1,8 @@
 ﻿@model TBashaBari.Models.TenantRequest
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
 <form method="post" asp-action="Create">
     <div class="border p-3">
@@ -32,7 +36,7 @@
                         <label asp-for="TenantEmail"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="TenantEmail" class="form-control" />
+                        <input asp-for="TenantEmail" class="form-control" value="@UserManager.GetUserName(User)" readonly />
                         <span asp-validation-for="TenantEmail" class="text-danger"></span>
                     </div>
 
