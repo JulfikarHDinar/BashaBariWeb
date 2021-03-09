@@ -338,3 +338,5 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+TBashaBari/.vs/TBashaBari/DesignTimeBuild/.dtbcache.v2
+TBashaBari/.vs/TBashaBari/config/applicationhost.config
