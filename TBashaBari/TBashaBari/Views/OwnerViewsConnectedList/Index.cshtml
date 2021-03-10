@@ -1,0 +1,62 @@
+﻿@model IEnumerable<TBashaBari.Models.TenantConnectsOwner>
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-info">Tenant List</h2>
+        </div>
+        @*<div class="col-6 text-right">
+            <a asp-controller="OwnerViewsConnectedList" asp-action="Create" class="btn btn-primary">
+            Add a Tenant
+            </a>
+            
+        </div>*@
+    </div>
+
+    <br/><br />
+
+    @if (Model.Count() > 0)
+    {
+        <table class="table table-bordered table-striped" style="width: 100%">
+            <thead>
+                <tr>
+                    <th>
+                        TenantEmail
+                    </th>
+                    <th>
+                        OwnerEmail
+                    </th>
+                    <th>
+                        IsConfirmed
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                <tr>
+                    <td width="50%">@obj.TenantEmail</td>
+                    <td width="30%">@obj.OwnerEmail</td>
+                    <td width="30%">@obj.IsConfirmed</td>
+                    <td class="text-center">
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="OwnerViewsConnectedList" asp-route-Id="@obj.ConnectionId" asp-action="Edit" class="btn btn-primary mx-2">
+                                Confirm
+                            </a>
+                            <a asp-controller="OwnerViewsConnectedList" asp-route-Id="@obj.ConnectionId" asp-action="Delete" class="btn btn-danger mx-2">
+                                Remove
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else { 
+        <p>You are not Connected</p>
+    }
+
+</div>
+

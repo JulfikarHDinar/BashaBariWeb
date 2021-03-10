@@ -14,12 +14,12 @@ namespace TBashaBari.Models
 
         [Required]
         [EmailAddress]
-        [DisplayName("Email")]
+        [DisplayName("Tenant Email")]
         public String TenantEmail { get; set; }
 
         [Required]
         [EmailAddress]
-        [DisplayName("Email")]
+        [DisplayName("Owner Email")]
         public String OwnerEmail { get; set; }
 
         [Required]
