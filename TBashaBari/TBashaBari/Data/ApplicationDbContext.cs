@@ -18,5 +18,6 @@ namespace TBashaBari.Data
         public DbSet<OwnerNotice> OwnerNotice { get; set; }
         public DbSet<TenantRequest> TenantRequest { get; set; }
         public DbSet <ApplicationUser> ApplicationUser { get; set; }
+        public DbSet <TenantConnectsOwner> TenantConnectsOwner { get; set; }
     }
 }
