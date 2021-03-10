@@ -14,7 +14,7 @@
             <a id="manage" class="nav-link text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profile</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-white" asp-area="" asp-controller="OwnerNotice" asp-action="Index">Notice</a>
+            <a class="nav-link text-white" asp-area="" asp-route-Id="@UserManager.GetUserName(User)" asp-controller="OwnerNotice" asp-action="Index">Notice</a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-white" asp-area="" asp-controller="OwnerViewsConnectedList" asp-action="Index">Tenant List</a>
@@ -31,7 +31,7 @@
             <a id="manage" class="nav-link text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profile</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-white" asp-area="" asp-controller="TenantRequest" asp-action="Index">Request</a>
+            <a class="nav-link text-white" asp-area="" asp-route-Id="@UserManager.GetUserName(User)" asp-controller="TenantRequest" asp-action="Index">Request</a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-white" asp-area="" asp-controller="TenantViewsConnectedList" asp-action="Index">Add Owner</a>

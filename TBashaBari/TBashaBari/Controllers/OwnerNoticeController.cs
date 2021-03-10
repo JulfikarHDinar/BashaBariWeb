@@ -16,8 +16,10 @@ namespace BashaBari.Controllers
         {
             _db = db;
         }
-        public IActionResult Index()
+        public IActionResult Index(string _CurrentUserEmail)
         {
+
+            //_CurrentUserEmail = current logged in user's email id
             IEnumerable<OwnerNotice> objList = _db.OwnerNotice;
             return View(objList);
         }
