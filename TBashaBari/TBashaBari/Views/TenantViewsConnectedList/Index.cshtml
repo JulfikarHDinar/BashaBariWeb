@@ -13,27 +13,30 @@
         <div class="col-6 text-right">
             @foreach (var obj in Model)
             {
-                if (!(UserManager.GetUserName(User) == obj.TenantEmail))
+                if ((UserManager.GetUserName(User) != obj.TenantEmail))
                 {
-                    <p>dfjsadfsdjkfsdkljf</p>
-                    if (obj.IsConfirmed == "No")
-                    {
-                        <p>dfjsadf111213213213213jf</p>
-                        <a asp-controller="TenantViewsConnectedList" asp-action="Create" class="btn btn-primary">
-                            Add Owner
-                        </a>
-                        break;
-                    }
-
-                }
-                else
-                {
-                    <p>**/*/*/*/*/</p>
+                    <p>@obj.TenantEmail</p>
                     <a asp-controller="TenantViewsConnectedList" asp-action="Create" class="btn btn-primary">
-                        Added
+                        Add Owner
                     </a>
+
                     break;
                 }
+                else if ((UserManager.GetUserName(User) == obj.TenantEmail) && obj.IsConfirmed == "No")
+                {
+                    <p>/*/*/*/*/*/</p>
+                    <p>@obj.TenantEmail</p>
+                    <a asp-controller="TenantViewsConnectedList" asp-action="Create" class="btn btn-primary">
+                        Add Owner
+                    </a>
+                    break;
+
+                }
+                else if ((UserManager.GetUserName(User) == obj.TenantEmail) && obj.IsConfirmed == "Yes")
+                {
+                    break;
+                }
+
 
             }
 
