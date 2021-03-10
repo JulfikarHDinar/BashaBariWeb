@@ -1,8 +1,75 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<head>
+    <!------------------Style Part------------->
+    <style type="text/css">
+        h1 {
+            color: darkblue;
+            font-weight: bold;
+        }
+
+        .card_icon_holder1 h5 {
+            color: darkblue;
+            font-weight: bold;
+        }
+
+        .card_icon_holder2 h5 {
+            color: darkblue;
+            font-weight: bold;
+        }
+
+        .icon_holder {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .icon {
+            height: 180px;
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="text-center">Welcome to BashaBari</h1>
+    <div class="card_icon_holder1">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <div class="icon_holder">
+                    <img src="~/images/home-icon1.png" class="icon" alt="Icon 1">
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <br>
+                    <br>
+                    <br>
+                    <h5>What we are offering</h5>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec elementum risus. Integer at velit id lacus lobortis aliquet.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec elementum risus. Integer at velit id lacus lobortis aliquet.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card_icon_holder2">
+        <div class="row no-gutters">
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5>What we are offering</h5>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec elementum risus. Integer at velit id lacus lobortis aliquet.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec elementum risus. Integer at velit id lacus lobortis aliquet.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="icon_holder">
+                    <img src="~/images/home-icon2.png" class="icon" alt="Icon 2">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
