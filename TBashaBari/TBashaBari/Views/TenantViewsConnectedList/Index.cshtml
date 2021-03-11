@@ -15,7 +15,7 @@
             {
                 if ((UserManager.GetUserName(User) != obj.TenantEmail))
                 {
-                    <p>@obj.TenantEmail</p>
+                    
                     <a asp-controller="TenantViewsConnectedList" asp-action="Create" class="btn btn-primary">
                         Add Owner
                     </a>
@@ -24,8 +24,8 @@
                 }
                 else if ((UserManager.GetUserName(User) == obj.TenantEmail) && obj.IsConfirmed == "No")
                 {
-                    <p>/*/*/*/*/*/</p>
-                    <p>@obj.TenantEmail</p>
+                    
+                    
                     <a asp-controller="TenantViewsConnectedList" asp-action="Create" class="btn btn-primary">
                         Add Owner
                     </a>
