@@ -34,6 +34,9 @@
                 }
                 else if ((UserManager.GetUserName(User) == obj.TenantEmail) && obj.IsConfirmed == "Yes")
                 {
+                    <a asp-controller="TenantViewsConnectedList" asp-action="Create" class="btn btn-primary">
+                        Add Owner
+                    </a>
                     break;
                 }
 
