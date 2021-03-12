@@ -1,0 +1,45 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace TBashaBari.Controllers
+{
+    public class DatabaseConnection
+    {
+        SqlCommand queryString = new SqlCommand();
+        SqlDataReader datareader;
+        SqlConnection conn = new SqlConnection();
+        public void DbConnect()
+        {
+            /*Actual string looks like this: 
+                                Data Source = "DESKTOP-RUB62SE\SQLEXPRESS"; database = "BashaBariWeb"; integrated security = SSPI;
+                                                                                                                                         */
+            conn.ConnectionString = "Data Source = \"DESKTOP-RUB62SE\\SQLEXPRESS\"; database = \"BashaBariWeb\"; integrated security = SSPI;";
+            conn.Open();
+            queryString.Connection = conn;
+
+        }
+
+        public SqlDataReader ExeQuery(string queryString)
+        {
+            try
+            {
+                this.queryString.CommandText = queryString;
+                datareader = this.queryString.ExecuteReader();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return datareader;
+        }
+
+        public void CloseDbConnect()
+        {
+            conn.Close();
+        }
+    }
+}

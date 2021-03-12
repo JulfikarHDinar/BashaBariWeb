@@ -5,23 +5,54 @@ using System.Linq;
 using System.Threading.Tasks;
 using TBashaBari.Data;
 using TBashaBari.Models;
+using System.Data.SqlClient;
+using TBashaBari.Controllers;
 
 namespace BashaBari.Controllers
 {
     public class OwnerNoticeController : Controller
     {
+        List<OwnerNotice> _ownernoticelist = new List<OwnerNotice>();
+
         private readonly ApplicationDbContext _db;
 
         public OwnerNoticeController(ApplicationDbContext db)
         {
             _db = db;
         }
-        public IActionResult Index(string _CurrentUserEmail)
+        public IActionResult Index(int? _CurrentUserEmail)
         {
+            int? email = _CurrentUserEmail;
+            ////_CurrentUserEmail = current logged in user's email id
+            //IEnumerable<OwnerNotice> objList = _db.OwnerNotice;
+            //return View(objList);
 
-            //_CurrentUserEmail = current logged in user's email id
-            IEnumerable<OwnerNotice> objList = _db.OwnerNotice;
-            return View(objList);
+            FetchOwnerNotice();
+            return View(_ownernoticelist);
+        }
+
+        private void FetchOwnerNotice()
+        {
+            if (_ownernoticelist.Count > 0)
+            {
+                _ownernoticelist.Clear();
+            }
+
+            DatabaseConnection obj = new DatabaseConnection();
+            obj.DbConnect();
+            string queryString = "SELECT TOP 1000 [NoticeId],[OwnerEmail],[NoticeText],[NoticeTime] FROM [BashaBariWeb].[dbo].[OwnerNotice]";
+
+            while (obj.ExeQuery(queryString).Read())
+            {
+                _ownernoticelist.Add(new OwnerNotice
+                {
+                    NoticeId = int.Parse(obj.ExeQuery(queryString)["NoticeId"].ToString()),
+                    OwnerEmail = obj.ExeQuery(queryString)["OwnerEmail"].ToString(),
+                    NoticeText = obj.ExeQuery(queryString)["NoticeText"].ToString(),
+                    NoticeTime = obj.ExeQuery(queryString)["NoticeTime"].ToString(),
+                });
+            }
+            obj.CloseDbConnect();
         }
 
         //GET_CREATE
@@ -35,7 +66,8 @@ namespace BashaBari.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(OwnerNotice obj)
         {
-            if (ModelState.IsValid) {
+            if (ModelState.IsValid)
+            {
                 _db.OwnerNotice.Add(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
@@ -46,7 +78,8 @@ namespace BashaBari.Controllers
         //GET_EDIT
         public IActionResult Edit(int? id)
         {
-            if (id == null || id == 0) {
+            if (id == null || id == 0)
+            {
                 return NotFound();
             }
 
@@ -106,5 +139,5 @@ namespace BashaBari.Controllers
 
 
 
-    } 
+    }
 }
