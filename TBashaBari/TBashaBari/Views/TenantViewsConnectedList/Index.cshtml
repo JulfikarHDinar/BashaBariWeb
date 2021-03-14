@@ -11,37 +11,31 @@
             <h2 class="text-info">Your Owner</h2>
         </div>
         <div class="col-6 text-right">
+            @{var flag = false;}
             @foreach (var obj in Model)
             {
                 if ((UserManager.GetUserName(User) != obj.TenantEmail))
                 {
-                    
-                    <a asp-controller="TenantViewsConnectedList" asp-action="Create" class="btn btn-primary">
-                        Add Owner
-                    </a>
-
-                    break;
-                }
-                else if ((UserManager.GetUserName(User) == obj.TenantEmail) && obj.IsConfirmed == "No")
-                {
-                    
-                    
-                    <a asp-controller="TenantViewsConnectedList" asp-action="Create" class="btn btn-primary">
-                        Add Owner
-                    </a>
-                    break;
+                    flag = false;
 
                 }
-                else if ((UserManager.GetUserName(User) == obj.TenantEmail) && obj.IsConfirmed == "Yes")
+
+                else
                 {
-                    <a asp-controller="TenantViewsConnectedList" asp-action="Create" class="btn btn-primary">
-                        Add Owner
-                    </a>
+                    flag = true;
                     break;
                 }
+
 
 
             }
+
+            @{ if (flag == false)
+                {<a asp-controller="TenantViewsConnectedList" asp-action="Create" class="btn btn-primary">
+                Add Owner
+            </a>
+                    }
+                }
 
         </div>
     </div>
