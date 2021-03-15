@@ -2,10 +2,9 @@
 
 <form method="post">
     <input asp-for="RequestId" hidden />
-    <input asp-for="CommentOnRequestText" hidden />
     <div class="border p-3">
         <div class="form-group row">
-            <h2 class="text-info pl-3">Edit Request</h2>
+            <h2 class="text-info pl-3">Delete Request</h2>
         </div>
         <div class="row">
             <div class="col-8">
@@ -14,8 +13,7 @@
                         <label asp-for="RequestText"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="RequestText" class="form-control" />
-                        <span asp-validation-for="RequestText" class="text-danger"></span>
+                        <input asp-for="RequestText" class="form-control" readonly />
                     </div>
 
                 </div>
@@ -34,7 +32,6 @@
                     </div>
                     <div class="col-8">
                         <input asp-for="TenantEmail" class="form-control" readonly />
-                        <span asp-validation-for="TenantEmail" class="text-danger"></span>
                     </div>
 
                 </div>
@@ -42,7 +39,7 @@
                     <div class="col-8 offset-4 row">
 
                         <div class="col">
-                            <input type="submit" class="btn btn-info w-100" value="Update" />
+                            <input type="submit" class="btn btn-danger w-100" value="Delete" />
                         </div>
                         <div class="col">
                             <a asp-action="Index" class="btn btn-success w-100">

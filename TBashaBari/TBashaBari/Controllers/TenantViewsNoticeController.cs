@@ -10,21 +10,21 @@ using TBashaBari.Controllers;
 
 namespace BashaBari.Controllers
 {
-    public class TenantRequestController : Controller
+    public class TenantViewsNotice : Controller
     {
-        List<TenantRequest> _tenantrequestlist = new List<TenantRequest>();
+        List<OwnerNotice> _ownernoticelist = new List<OwnerNotice>();
 
         private readonly ApplicationDbContext _db;
 
-        public TenantRequestController(ApplicationDbContext db)
+        public TenantViewsNotice(ApplicationDbContext db)
         {
             _db = db;
         }
 
         public IActionResult Index()
         {
-            FetchTenantRequest();
-            return View(_tenantrequestlist);
+            FetchOwnerNotice();
+            return View(_ownernoticelist);
         }
 
         //:::::::::::::::::::::::::::::::::::::::::GET_CREATE
@@ -35,16 +35,15 @@ namespace BashaBari.Controllers
         //::::::::::::::::::::::::::::::::::::::::POST_CREATE
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(TenantRequest obj)
+        public IActionResult Create(OwnerNotice obj)
         {
             if (ModelState.IsValid)
             {
-                _db.TenantRequest.Add(obj);
+                _db.OwnerNotice.Add(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(obj);
-            
         }
 
         //:::::::::::::::::::::::::::::::::::::::GET_EDIT
@@ -55,7 +54,7 @@ namespace BashaBari.Controllers
                 return NotFound();
             }
 
-            var obj = _db.TenantRequest.Find(id);
+            var obj = _db.OwnerNotice.Find(id);
             if (obj == null)
             {
                 return NotFound();
@@ -66,11 +65,11 @@ namespace BashaBari.Controllers
         //::::::::::::::::::::::::::::::::::::::POST_EDIT
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(TenantRequest obj)
+        public IActionResult Edit(OwnerNotice obj)
         {
             if (ModelState.IsValid)
             {
-                _db.TenantRequest.Update(obj);
+                _db.OwnerNotice.Update(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -85,7 +84,7 @@ namespace BashaBari.Controllers
                 return NotFound();
             }
 
-            var obj = _db.TenantRequest.Find(id);
+            var obj = _db.OwnerNotice.Find(id);
             if (obj == null)
             {
                 return NotFound();
@@ -96,11 +95,11 @@ namespace BashaBari.Controllers
         //::::::::::::::::::::::::::::::::::::::POST_DELETE
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(TenantRequest obj)
+        public IActionResult Delete(OwnerNotice obj)
         {
             if (ModelState.IsValid)
             {
-                _db.TenantRequest.Remove(obj);
+                _db.OwnerNotice.Remove(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -109,16 +108,15 @@ namespace BashaBari.Controllers
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
         //:::::::::::::::::::::::::::::         custom methods        ::::::::::::::::::::::::::::::::://
-        private void FetchTenantRequest()
+        private void FetchOwnerNotice()
         {
             //User.Identity.Name returns current logged in user's email
-            string queryString = "SELECT TOP 1000 [RequestId],[TenantEmail],[RequestText],[RequestTime],[CommentOnRequestText] " +
-                                        "FROM [BashaBariWeb].[dbo].[TenantRequest] " +
-                                        "WHERE [TenantEmail] = '" + User.Identity.Name + "'";
+            string queryString = "SELECT TOP 1000 [NoticeId],[OwnerEmail],[NoticeText],[NoticeTime] " +
+                                        "FROM [BashaBariWeb].[dbo].[OwnerNotice] ";
             //to clear the list initially
-            if (_tenantrequestlist.Count > 0)
+            if (_ownernoticelist.Count > 0)
             {
-                _tenantrequestlist.Clear();
+                _ownernoticelist.Clear();
             }
 
             //database operation
@@ -126,13 +124,12 @@ namespace BashaBari.Controllers
             obj.DbConnect();
             while (obj.ExeQuery(queryString).Read())
             {
-                _tenantrequestlist.Add(new TenantRequest
+                _ownernoticelist.Add(new OwnerNotice
                 {
-                    RequestId = int.Parse(obj.ExeQuery(queryString)["RequestId"].ToString()),
-                    TenantEmail = obj.ExeQuery(queryString)["TenantEmail"].ToString(),
-                    RequestText = obj.ExeQuery(queryString)["RequestText"].ToString(),
-                    RequestTime = obj.ExeQuery(queryString)["RequestTime"].ToString(),
-                    CommentOnRequestText = obj.ExeQuery(queryString)["CommentOnRequestText"].ToString(),
+                    NoticeId = int.Parse(obj.ExeQuery(queryString)["NoticeId"].ToString()),
+                    OwnerEmail = obj.ExeQuery(queryString)["OwnerEmail"].ToString(),
+                    NoticeText = obj.ExeQuery(queryString)["NoticeText"].ToString(),
+                    NoticeTime = obj.ExeQuery(queryString)["NoticeTime"].ToString(),
                 });
             }
             obj.CloseDbConnect();
@@ -140,6 +137,5 @@ namespace BashaBari.Controllers
 
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
-
     }
 }

@@ -20,48 +20,19 @@ namespace BashaBari.Controllers
         {
             _db = db;
         }
-        public IActionResult Index(int? _CurrentUserEmail)
-        {
-            int? email = _CurrentUserEmail;
-            ////_CurrentUserEmail = current logged in user's email id
-            //IEnumerable<OwnerNotice> objList = _db.OwnerNotice;
-            //return View(objList);
 
+        public IActionResult Index()
+        {
             FetchOwnerNotice();
             return View(_ownernoticelist);
         }
 
-        private void FetchOwnerNotice()
-        {
-            if (_ownernoticelist.Count > 0)
-            {
-                _ownernoticelist.Clear();
-            }
-
-            DatabaseConnection obj = new DatabaseConnection();
-            obj.DbConnect();
-            string queryString = "SELECT TOP 1000 [NoticeId],[OwnerEmail],[NoticeText],[NoticeTime] FROM [BashaBariWeb].[dbo].[OwnerNotice]";
-
-            while (obj.ExeQuery(queryString).Read())
-            {
-                _ownernoticelist.Add(new OwnerNotice
-                {
-                    NoticeId = int.Parse(obj.ExeQuery(queryString)["NoticeId"].ToString()),
-                    OwnerEmail = obj.ExeQuery(queryString)["OwnerEmail"].ToString(),
-                    NoticeText = obj.ExeQuery(queryString)["NoticeText"].ToString(),
-                    NoticeTime = obj.ExeQuery(queryString)["NoticeTime"].ToString(),
-                });
-            }
-            obj.CloseDbConnect();
-        }
-
-        //GET_CREATE
+        //:::::::::::::::::::::::::::::::::::::::::GET_CREATE
         public IActionResult Create()
         {
             return View();
         }
-
-        //POST_CREATE
+        //::::::::::::::::::::::::::::::::::::::::POST_CREATE
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(OwnerNotice obj)
@@ -75,7 +46,7 @@ namespace BashaBari.Controllers
             return View(obj);
         }
 
-        //GET_EDIT
+        //:::::::::::::::::::::::::::::::::::::::GET_EDIT
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)
@@ -91,8 +62,7 @@ namespace BashaBari.Controllers
 
             return View(obj);
         }
-
-        //POST_EDIT
+        //::::::::::::::::::::::::::::::::::::::POST_EDIT
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(OwnerNotice obj)
@@ -106,7 +76,7 @@ namespace BashaBari.Controllers
             return View(obj);
         }
 
-        //GET_DELETE
+        //:::::::::::::::::::::::::::::::::::::::GET_DELETE
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)
@@ -122,8 +92,7 @@ namespace BashaBari.Controllers
 
             return View(obj);
         }
-
-        //POST_DELETE
+        //::::::::::::::::::::::::::::::::::::::POST_DELETE
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(OwnerNotice obj)
@@ -137,7 +106,37 @@ namespace BashaBari.Controllers
             return View(obj);
         }
 
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
+        //:::::::::::::::::::::::::::::         custom methods        ::::::::::::::::::::::::::::::::://
+        private void FetchOwnerNotice()
+        {
+            //User.Identity.Name returns current logged in user's email
+            string queryString = "SELECT TOP 1000 [NoticeId],[OwnerEmail],[NoticeText],[NoticeTime] " +
+                                        "FROM [BashaBariWeb].[dbo].[OwnerNotice] " +
+                                        "WHERE [OwnerEmail] = '" + User.Identity.Name + "'";
+            //to clear the list initially
+            if (_ownernoticelist.Count > 0)
+            {
+                _ownernoticelist.Clear();
+            }
+
+            //database operation
+            DatabaseConnection obj = new DatabaseConnection();
+            obj.DbConnect();
+            while (obj.ExeQuery(queryString).Read())
+            {
+                _ownernoticelist.Add(new OwnerNotice
+                {
+                    NoticeId = int.Parse(obj.ExeQuery(queryString)["NoticeId"].ToString()),
+                    OwnerEmail = obj.ExeQuery(queryString)["OwnerEmail"].ToString(),
+                    NoticeText = obj.ExeQuery(queryString)["NoticeText"].ToString(),
+                    NoticeTime = obj.ExeQuery(queryString)["NoticeTime"].ToString(),
+                });
+            }
+            obj.CloseDbConnect();
+        }
 
 
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
     }
 }

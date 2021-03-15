@@ -8,12 +8,6 @@
         <div class="col-6">
             <h2 class="text-primary">Requests</h2>
         </div>
-        <div class="col-6 text-right">
-            <a asp-controller="TenantRequest" asp-action="Create" class="btn btn-primary">
-                Post New Request
-            </a>
-
-        </div>
     </div>
 
     <br /><br />
@@ -23,6 +17,9 @@
             <tr>
                 <th>
                     Request
+                </th>
+                <th>
+                    Tenant Email
                 </th>
                 <th>
                     Time
@@ -40,15 +37,13 @@
                 {
                 <tr>
                     <td width="40%">@obj.RequestText</td>
+                    <td width="40%">@obj.TenantEmail </td>
                     <td width="20%">@obj.RequestTime</td>
-                    <td width="40%">@obj.CommentOnRequestText</td>
+                    <td width="20%">@obj.CommentOnRequestText</td>
                     <td class="text-center">
                         <div class="w-75 btn-group" role="group">
-                            <a asp-controller="TenantRequest" asp-route-Id="@obj.RequestId" asp-action="Edit" class="btn btn-primary mx-2">
-                                Edit
-                            </a>
-                            <a asp-controller="TenantRequest" asp-route-Id="@obj.RequestId" asp-action="Delete" class="btn btn-danger mx-2">
-                                Delete
+                            <a asp-controller="OwnerViewsRequest" asp-route-Id="@obj.RequestId" asp-action="Edit" class="btn btn-primary mx-2">
+                                Comment
                             </a>
                         </div>
                     </td>

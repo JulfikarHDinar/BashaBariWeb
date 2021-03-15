@@ -10,13 +10,13 @@ using TBashaBari.Controllers;
 
 namespace BashaBari.Controllers
 {
-    public class TenantRequestController : Controller
+    public class OwnerViewsRequest : Controller
     {
         List<TenantRequest> _tenantrequestlist = new List<TenantRequest>();
 
         private readonly ApplicationDbContext _db;
 
-        public TenantRequestController(ApplicationDbContext db)
+        public OwnerViewsRequest(ApplicationDbContext db)
         {
             _db = db;
         }
@@ -113,8 +113,7 @@ namespace BashaBari.Controllers
         {
             //User.Identity.Name returns current logged in user's email
             string queryString = "SELECT TOP 1000 [RequestId],[TenantEmail],[RequestText],[RequestTime],[CommentOnRequestText] " +
-                                        "FROM [BashaBariWeb].[dbo].[TenantRequest] " +
-                                        "WHERE [TenantEmail] = '" + User.Identity.Name + "'";
+                                        "FROM [BashaBariWeb].[dbo].[TenantRequest] ";
             //to clear the list initially
             if (_tenantrequestlist.Count > 0)
             {
