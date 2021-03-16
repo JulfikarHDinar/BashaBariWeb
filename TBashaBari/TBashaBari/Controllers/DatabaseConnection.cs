@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
@@ -38,6 +39,25 @@ namespace TBashaBari.Controllers
             }
 
             return datareader;
+        }
+
+        public string getUserFullName(string userEmail) {
+            try
+            {
+                DbConnect();
+                queryString.CommandType = CommandType.Text;
+                queryString.Parameters.Add("FullName", SqlDbType.VarChar).Value = userEmail;
+                queryString.CommandText = "SELECT[FullName] FROM[BashaBariWeb].[dbo].[AspNetUsers] WHERE[UserName] = '" + userEmail + "'";
+                string userFullName = queryString.ExecuteScalar().ToString();
+                CloseDbConnect();
+
+                return userFullName;
+
+            }
+            catch (Exception)
+            {
+                return null;
+            }   
         }
 
         public void CloseDbConnect()
