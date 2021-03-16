@@ -115,7 +115,7 @@ namespace BashaBari.Controllers
             string queryString = "SELECT TOP 1000 C.[TenantEmail], T.[RequestText],T.[RequestTime],T.[CommentOnRequestText]" +
                 "FROM TenantConnectsOwner C JOIN  TenantRequest T " +
                 "ON C.[TenantEmail] = T.[TenantEmail] " +
-                "WHERE [OwnerEmail] = '" + User.Identity.Name + "'";
+                "WHERE C.[IsConfirmed] ='Yes' AND [OwnerEmail] = '" + User.Identity.Name + "'";
             //to clear the list initially
             if (_tenantrequestlist.Count > 0)
             {

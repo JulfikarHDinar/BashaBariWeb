@@ -111,10 +111,10 @@ namespace BashaBari.Controllers
         private void FetchOwnerNotice()
         {
             //User.Identity.Name returns current logged in user's email
-            string queryString = "SELECT TOP 1000 O.[NoticeText],O.[NoticeTime], C.[OwnerEmail]" +
+            string queryString = "SELECT TOP 1000 O.[NoticeText],O.[NoticeTime], C.[OwnerEmail], C.[IsConfirmed]" +
                 "FROM TenantConnectsOwner C JOIN  OwnerNotice O " +
                 "ON C.[OwnerEmail] = O.[OwnerEmail] " +
-                "WHERE C.[TenantEmail] = '" + User.Identity.Name + "'";
+                "WHERE C.[IsConfirmed] ='Yes' AND C.[TenantEmail] = '" + User.Identity.Name + "'";
             //to clear the list initially
             if (_ownernoticelist.Count > 0)
             {
