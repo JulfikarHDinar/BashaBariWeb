@@ -40,11 +40,11 @@
                                         <small>@obj.NoticeTime</small>
                                     </div>
                                     <p class="mb-3 ml-4">@obj.NoticeText</p>
-                                    <div>
-                                        <a asp-controller="OwnerNotice" asp-route-Id="@obj.NoticeId" asp-action="Edit" class="btn btn-primary ml-4">
+                                    <div class="text-lg-right">
+                                        <a asp-controller="OwnerNotice" asp-route-Id="@obj.NoticeId" asp-action="Edit" class="btn btn-primary ml-3">
                                             Edit
                                         </a>
-                                        <a asp-controller="OwnerNotice" asp-route-Id="@obj.NoticeId" asp-action="Delete" class="btn btn-primary ml-4">
+                                        <a asp-controller="OwnerNotice" asp-route-Id="@obj.NoticeId" asp-action="Delete" class="btn btn-primary ml-3">
                                             Delete
                                         </a>
                                     </div>
