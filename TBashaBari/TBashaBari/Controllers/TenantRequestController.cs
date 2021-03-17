@@ -114,7 +114,8 @@ namespace BashaBari.Controllers
             //User.Identity.Name returns current logged in user's email
             string queryString = "SELECT TOP 1000 [RequestId],[TenantEmail],[RequestText],[RequestTime],[CommentOnRequestText] " +
                                         "FROM [BashaBariWeb].[dbo].[TenantRequest] " +
-                                        "WHERE [TenantEmail] = '" + User.Identity.Name + "'";
+                                        "WHERE [TenantEmail] = '" + User.Identity.Name + "'" +
+                                        "ORDER BY [RequestTime] DESC";
             //to clear the list initially
             if (_tenantrequestlist.Count > 0)
             {
