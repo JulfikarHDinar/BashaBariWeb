@@ -112,10 +112,11 @@ namespace BashaBari.Controllers
         private void FetchTenantRequest()
         {
             //User.Identity.Name returns current logged in user's email
-            string queryString = "SELECT TOP 1000 C.[TenantEmail], T.[RequestText],T.[RequestTime],T.[CommentOnRequestText]" +
+            string queryString = "SELECT TOP 1000 T.[RequestId], C.[TenantEmail], T.[RequestText],T.[RequestTime],T.[CommentOnRequestText]" +
                 "FROM TenantConnectsOwner C JOIN  TenantRequest T " +
                 "ON C.[TenantEmail] = T.[TenantEmail] " +
-                "WHERE C.[IsConfirmed] ='Yes' AND [OwnerEmail] = '" + User.Identity.Name + "'";
+                "WHERE C.[IsConfirmed] ='Yes' AND [OwnerEmail] = '" + User.Identity.Name + "'" +
+                "ORDER BY T.[RequestTime] DESC";
             //to clear the list initially
             if (_tenantrequestlist.Count > 0)
             {
@@ -129,7 +130,7 @@ namespace BashaBari.Controllers
             {
                 _tenantrequestlist.Add(new TenantRequest
                 {
-                   // RequestId = int.Parse(obj.ExeQuery(queryString)["RequestId"].ToString()),
+                    RequestId = int.Parse(obj.ExeQuery(queryString)["RequestId"].ToString()),
                     TenantEmail = obj.ExeQuery(queryString)["TenantEmail"].ToString(),
                     RequestText = obj.ExeQuery(queryString)["RequestText"].ToString(),
                     RequestTime = obj.ExeQuery(queryString)["RequestTime"].ToString(),
