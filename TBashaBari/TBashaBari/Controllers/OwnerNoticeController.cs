@@ -113,7 +113,8 @@ namespace BashaBari.Controllers
             //User.Identity.Name returns current logged in user's email
             string queryString = "SELECT TOP 1000 [NoticeId],[OwnerEmail],[NoticeText],[NoticeTime] " +
                                         "FROM [BashaBariWeb].[dbo].[OwnerNotice] " +
-                                        "WHERE [OwnerEmail] = '" + User.Identity.Name + "'";
+                                        "WHERE [OwnerEmail] = '" + User.Identity.Name + "'" +
+                                        "ORDER BY [NoticeTime] DESC";
             //to clear the list initially
             if (_ownernoticelist.Count > 0)
             {
