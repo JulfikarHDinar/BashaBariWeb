@@ -4,49 +4,46 @@
 
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
-@{ 
-   //database operation to get current user's fullname
+@{
+    //database operation to get current user's fullname
     DatabaseConnection ob = new DatabaseConnection();
     string FullName = ob.getUserFullName(UserManager.GetUserName(User));
 }
 
-<head>
-
-</head>
-<body>
-    <div class="container p-3">
-        <div class="row pt-4">
-            <div class="col-6">
-                <h2 class="text-primary font-weight-bold">Your Notices</h2>
-            </div>
-            <div class="col-6 text-right">
-                <a asp-controller="OwnerNotice" asp-action="Create" class="btn btn-primary">
-                    Post New Notice
-                </a>
-            </div>
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary font-weight-bold">Your Notices</h2>
         </div>
+        <div class="col-6 text-right">
+            <a asp-controller="OwnerNotice" asp-action="Create" class="btn btn-primary">
+                Post New Notice
+            </a>
+        </div>
+    </div>
 
-        <br /><br />
+    <br /><br />
 
-        @{
-            if (Model != null)
+    @{
+        if (Model != null)
+        {
+            foreach (var obj in Model)
             {
-                foreach (var obj in Model)
-                {
-                    <div class="card w-80 mb-5 mx-5">
-                        <div class="row no-gutters">
-                            <div class="col-sm-2">
-                                <div class="login-form-icon text-center">
-                                    <i class="fas fa-user-circle fa-6x text-secondary p-3"></i>
-                                </div>
+                <div class="card w-80 mb-5 mx-5">
+                    <div class="row no-gutters">
+                        <div class="col-sm-2">
+                            <div class="login-form-icon text-center">
+                                <i class="fas fa-user-circle fa-6x text-secondary p-3"></i>
                             </div>
-                            <div class="col-sm-10">
+                        </div>
+                        <div class="col-sm-10">
                                 <div class="card-body">
-                                    <div class="d-flex w-100 justify-content-between mb-3">
-                                                <h5 class="mb-1">@FullName </h5>
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="font-weight-bold">@FullName </h5>
                                         <small>@obj.NoticeTime</small>
                                     </div>
-                                    <p class="mb-3 ml-2">@obj.NoticeText</p>
+                                    <small>[ @obj.OwnerEmail ]</small>
+                                    <p class="my-4 ml-2">@obj.NoticeText</p>
                                     <div class="text-lg-right">
                                         <a asp-controller="OwnerNotice" asp-route-Id="@obj.NoticeId" asp-action="Edit" class="btn btn-primary ml-3">
                                             Edit
@@ -56,11 +53,10 @@
                                         </a>
                                     </div>
                                 </div>
-                            </div>
                         </div>
                     </div>
-                }
+                </div>
             }
         }
-    </div>
-</body>
+    }
+</div>
