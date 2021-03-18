@@ -18,7 +18,7 @@ namespace TBashaBari.Models
         public String OwnerEmail { get; set; }
 
         [Required]
-        [StringLength(60, MinimumLength = 1, ErrorMessage = "Maximum text length 60")]
+        [StringLength(100, MinimumLength = 1, ErrorMessage = "Maximum text length 100")]
         [DisplayName("Notice")]
         public String NoticeText { get; set; }
 

@@ -1,13 +1,13 @@
-﻿@model TBashaBari.Models.TenantRequest
-@using Microsoft.AspNetCore.Identity
+﻿<!--model TBashaBari.Models.TenantRequest
+using Microsoft.AspNetCore.Identity
 
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+inject SignInManager<IdentityUser> SignInManager
+inject UserManager<IdentityUser> UserManager
 
 <form method="post" asp-action="Create">
-    <div class="border p-3">
+    <div class="border p-3">-->
         @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
-        <div class="form-group row">
+        <!--<div class="form-group row">
             <h2 class="text-info pl-3">Add Request</h2>
         </div>
         <div class="row">
@@ -36,7 +36,7 @@
                         <label asp-for="TenantEmail"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="TenantEmail" class="form-control" value="@UserManager.GetUserName(User)" readonly />
+                        <input asp-for="TenantEmail" class="form-control" value="UserManager.GetUserName(User)" readonly />
                         <span asp-validation-for="TenantEmail" class="text-danger"></span>
                     </div>
 
@@ -55,9 +55,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-4">-->
                 @* Keep this empty *@
-            </div>
+            <!--</div>
         </div>
     </div>
 </form>
@@ -67,9 +67,9 @@
     document.querySelector("#today").value = today;
 </script>
 
-@section Scripts{
-    @{
+section Scripts{
+    {
         <partial name="_ValidationScriptsPartial" />
     }
-}
+}-->
 

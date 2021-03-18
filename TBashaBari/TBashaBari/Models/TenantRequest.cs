@@ -18,7 +18,7 @@ namespace TBashaBari.Models
         public String TenantEmail { get; set; }
 
         [Required]
-        [StringLength(60, MinimumLength = 1, ErrorMessage = "Maximum text length 60")]
+        [StringLength(100, MinimumLength = 1, ErrorMessage = "Maximum text length 100")]
         [DisplayName("Request")]
         public String RequestText { get; set; }
 
@@ -26,9 +26,12 @@ namespace TBashaBari.Models
         [DisplayName("Time")]
         public String RequestTime { get; set; }
 
-        [StringLength(60, MinimumLength = 1, ErrorMessage = "Maximum text length 60")]
+        [StringLength(100, MinimumLength = 1, ErrorMessage = "Maximum text length 100")]
         [DisplayName("Comment")]
         public String CommentOnRequestText { get; set; }
+
+        [DisplayName("Time")]
+        public String CommentOnRequestTime { get; set; }
 
     }
 }

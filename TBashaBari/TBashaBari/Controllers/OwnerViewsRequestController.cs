@@ -112,11 +112,11 @@ namespace BashaBari.Controllers
         private void FetchTenantRequest()
         {
             //User.Identity.Name returns current logged in user's email
-            string queryString = "SELECT TOP 1000 T.[RequestId], C.[TenantEmail], T.[RequestText],T.[RequestTime],T.[CommentOnRequestText]" +
-                "FROM TenantConnectsOwner C JOIN  TenantRequest T " +
-                "ON C.[TenantEmail] = T.[TenantEmail] " +
-                "WHERE C.[IsConfirmed] ='Yes' AND [OwnerEmail] = '" + User.Identity.Name + "'" +
-                "ORDER BY T.[RequestTime] DESC";
+            string queryString = "SELECT TOP 1000 T.[RequestId], C.[TenantEmail], T.[RequestText], T.[RequestTime], T.[CommentOnRequestText], T.[CommentOnRequestTime] " +
+                                        "FROM [BashaBariWeb].[dbo].[TenantConnectsOwner] C JOIN [BashaBariWeb].[dbo].[TenantRequest] T " +
+                                        "ON C.[TenantEmail] = T.[TenantEmail] " +
+                                        "WHERE C.[IsConfirmed] ='Yes' AND C.[OwnerEmail] = '" + User.Identity.Name + "' " +
+                                        "ORDER BY T.[RequestTime] DESC";
             //to clear the list initially
             if (_tenantrequestlist.Count > 0)
             {
@@ -135,6 +135,7 @@ namespace BashaBari.Controllers
                     RequestText = obj.ExeQuery(queryString)["RequestText"].ToString(),
                     RequestTime = obj.ExeQuery(queryString)["RequestTime"].ToString(),
                     CommentOnRequestText = obj.ExeQuery(queryString)["CommentOnRequestText"].ToString(),
+                    CommentOnRequestTime = obj.ExeQuery(queryString)["CommentOnRequestTime"].ToString(),
                 });
             }
             obj.CloseDbConnect();

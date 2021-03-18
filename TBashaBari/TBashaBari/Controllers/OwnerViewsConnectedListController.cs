@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TBashaBari.Controllers;
 using TBashaBari.Data;
 using TBashaBari.Models;
 
@@ -10,6 +11,7 @@ namespace BashaBari.Controllers
 {
     public class OwnerViewsConnectedListController : Controller
     {
+        List<TenantConnectsOwner> _tenantconnectsownerlist = new List<TenantConnectsOwner>();
         private readonly ApplicationDbContext _db;
 
         public OwnerViewsConnectedListController(ApplicationDbContext db)
@@ -18,8 +20,8 @@ namespace BashaBari.Controllers
         }
         public IActionResult Index()
         {
-            IEnumerable<TenantConnectsOwner> objList = _db.TenantConnectsOwner;
-            return View(objList);
+            FetchTenantConnectsOwner();
+            return View(_tenantconnectsownerlist);
         }
 
         //GET
@@ -104,6 +106,40 @@ namespace BashaBari.Controllers
             }
             return View(obj);
         }
+
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
+        //:::::::::::::::::::::::::::::         custom methods        ::::::::::::::::::::::::::::::::://
+        private void FetchTenantConnectsOwner()
+        {
+            //User.Identity.Name returns current logged in user's email
+            string queryString = "SELECT TOP 1000 [ConnectionId],[TenantEmail],[OwnerEmail],[IsConfirmed] " +
+                                        "FROM [BashaBariWeb].[dbo].[TenantConnectsOwner] " +
+                                        "WHERE [OwnerEmail] = '" + User.Identity.Name + "' " +
+                                        "ORDER BY [ConnectionId] DESC";
+            //to clear the list initially
+            if (_tenantconnectsownerlist.Count > 0)
+            {
+                _tenantconnectsownerlist.Clear();
+            }
+
+            //database operation
+            DatabaseConnection obj = new DatabaseConnection();
+            obj.DbConnect();
+            while (obj.ExeQuery(queryString).Read())
+            {
+                _tenantconnectsownerlist.Add(new TenantConnectsOwner
+                {
+                    ConnectionId = int.Parse(obj.ExeQuery(queryString)["ConnectionId"].ToString()),
+                    TenantEmail = obj.ExeQuery(queryString)["TenantEmail"].ToString(),
+                    OwnerEmail = obj.ExeQuery(queryString)["OwnerEmail"].ToString(),
+                    IsConfirmed = obj.ExeQuery(queryString)["IsConfirmed"].ToString(),
+                });
+            }
+            obj.CloseDbConnect();
+        }
+
+
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
 
     }
 }

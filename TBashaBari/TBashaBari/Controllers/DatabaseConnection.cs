@@ -47,7 +47,7 @@ namespace TBashaBari.Controllers
                 DbConnect();
                 queryString.CommandType = CommandType.Text;
                 queryString.Parameters.Add("FullName", SqlDbType.VarChar).Value = userEmail;
-                queryString.CommandText = "SELECT[FullName] FROM[BashaBariWeb].[dbo].[AspNetUsers] WHERE[UserName] = '" + userEmail + "'";
+                queryString.CommandText = "SELECT [FullName] FROM [BashaBariWeb].[dbo].[AspNetUsers] WHERE [UserName] = '" + userEmail + "'";
                 string userFullName = queryString.ExecuteScalar().ToString();
                 CloseDbConnect();
 
@@ -58,6 +58,26 @@ namespace TBashaBari.Controllers
             {
                 return null;
             }   
+        }
+
+        public string getTenantsOwner(string tenantEmail)
+        {
+            try
+            {
+                DbConnect();
+                queryString.CommandType = CommandType.Text;
+                queryString.Parameters.Add("FullName", SqlDbType.VarChar).Value = tenantEmail;
+                queryString.CommandText = "SELECT [OwnerEmail] FROM [BashaBariWeb].[dbo].[TenantConnectsOwner] WHERE [TenantEmail] = '" + tenantEmail + "'";
+                string ownerEmail = queryString.ExecuteScalar().ToString();
+                CloseDbConnect();
+
+                return ownerEmail;
+
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public void CloseDbConnect()
