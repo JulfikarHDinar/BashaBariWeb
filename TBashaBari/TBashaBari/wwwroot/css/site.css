@@ -97,4 +97,6 @@ div.card-content {
     padding: 20px;
 }
 
-
+.card {
+    background-color: blue;
+}
