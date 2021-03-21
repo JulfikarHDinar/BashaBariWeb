@@ -36,40 +36,60 @@
 </head>
 <body>
     <h1 class="text-center">Welcome to BashaBari</h1>
-    <div class="card_icon_holder1">
-        <div class="row no-gutters">
-            <div class="col-md-4">
-                <div class="icon_holder">
-                    <img src="~/images/home-icon1.png" class="icon" alt="Icon 1">
-                </div>
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <br>
-                    <br>
-                    <br>
-                    <h5>What we are offering</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec elementum risus. Integer at velit id lacus lobortis aliquet.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec elementum risus. Integer at velit id lacus lobortis aliquet.</p>
+    <section class="container-fluid bg-transparent pb-2">
+        <div class="my-4">
+            <!--Home page Carousel-->
+            <div class="bd-example">
+                <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+                        <li data-target="#carouselExampleCaptions" data-slide-to="3"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <!--Men's Carousel-->
+                        <div class="carousel-item active">
+                            <a class="text-decoration-none" asp-controller="Product" asp-action="Men">
+                                <img src="~/images/home/1.jpg" class="d-block w-100" alt="Slide1">
+                               
+                            </a>
+                        </div>
+                        <!--Women's Carousel-->
+                        <div class="carousel-item">
+                            <a class="text-decoration-none" asp-controller="Product" asp-action="Women">
+                                <img src="~/images/home/2.jpg" class="d-block w-100" alt="Slide2">
+                               
+                            </a>
+                        </div>
+                        <!--Kid's Carousel-->
+                        <div class="carousel-item">
+                            <a class="text-decoration-none" asp-controller="Product" asp-action="Kids">
+                                <img src="~/images/home/3.jpg" class="d-block w-100" alt="Slide3">
+                                
+                            </a>
+                        </div>
+                        <!--Others Carousel-->
+                        <div class="carousel-item">
+                            <a class="text-decoration-none" asp-controller="Product" asp-action="Others">
+                                <img src="~/images/home/4.jpg" class="d-block w-100" alt="Slide4">
+                                
+                            </a>
+                        </div>
+                    </div>
+                    <!--Carousel Left Slider Button-->
+                    <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <!--Carousel Left Slider Button-->
+                    <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="card_icon_holder2">
-        <div class="row no-gutters">
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5>What we are offering</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec elementum risus. Integer at velit id lacus lobortis aliquet.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec elementum risus. Integer at velit id lacus lobortis aliquet.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="icon_holder">
-                    <img src="~/images/home-icon2.png" class="icon" alt="Icon 2">
-                </div>
-            </div>
-        </div>
-    </div>
+    </section>
 </body>
 
