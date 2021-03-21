@@ -12,7 +12,7 @@ namespace BashaBari.Controllers
 {
     public class TenantViewsBillController : Controller
     {
-        List<OwnerNotice> _ownernoticelist = new List<OwnerNotice>();
+        List<BillInformation> _billinformationlist = new List<BillInformation>();
 
         private readonly ApplicationDbContext _db;
 
@@ -23,8 +23,8 @@ namespace BashaBari.Controllers
 
         public IActionResult Index()
         {
-            FetchOwnerNotice();
-            return View(_ownernoticelist);
+            FetchBillInfo();
+            return View(_billinformationlist);
         }
 
         //:::::::::::::::::::::::::::::::::::::::::GET_CREATE
@@ -35,11 +35,11 @@ namespace BashaBari.Controllers
         //::::::::::::::::::::::::::::::::::::::::POST_CREATE
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(OwnerNotice obj)
+        public IActionResult Create(BillInformation obj)
         {
             if (ModelState.IsValid)
             {
-                _db.OwnerNotice.Add(obj);
+                _db.BillInformation.Add(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -54,7 +54,7 @@ namespace BashaBari.Controllers
                 return NotFound();
             }
 
-            var obj = _db.OwnerNotice.Find(id);
+            var obj = _db.BillInformation.Find(id);
             if (obj == null)
             {
                 return NotFound();
@@ -65,11 +65,11 @@ namespace BashaBari.Controllers
         //::::::::::::::::::::::::::::::::::::::POST_EDIT
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(OwnerNotice obj)
+        public IActionResult Edit(BillInformation obj)
         {
             if (ModelState.IsValid)
             {
-                _db.OwnerNotice.Update(obj);
+                _db.BillInformation.Update(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -84,7 +84,7 @@ namespace BashaBari.Controllers
                 return NotFound();
             }
 
-            var obj = _db.OwnerNotice.Find(id);
+            var obj = _db.BillInformation.Find(id);
             if (obj == null)
             {
                 return NotFound();
@@ -95,11 +95,11 @@ namespace BashaBari.Controllers
         //::::::::::::::::::::::::::::::::::::::POST_DELETE
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(OwnerNotice obj)
+        public IActionResult Delete(BillInformation obj)
         {
             if (ModelState.IsValid)
             {
-                _db.OwnerNotice.Remove(obj);
+                _db.BillInformation.Remove(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -108,17 +108,18 @@ namespace BashaBari.Controllers
 
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
         //:::::::::::::::::::::::::::::         custom methods        ::::::::::::::::::::::::::::::::://
-        private void FetchOwnerNotice()
+        private void FetchBillInfo()
         {
             //User.Identity.Name returns current logged in user's email
-            string queryString = "SELECT TOP 1000 [NoticeId],[OwnerEmail],[NoticeText],[NoticeTime] " +
-                                        "FROM [BashaBariWeb].[dbo].[OwnerNotice] " +
-                                        "WHERE [OwnerEmail] = '" + User.Identity.Name + "' " +
-                                        "ORDER BY [NoticeTime] DESC";
+            string queryString = "SELECT TOP 1000 [BillId],[OwnerEmail],[TenantEmail],[BillTime],[WaterAmount],[WaterPaid],[WaterVerified],[ElectricAmount]," +
+                                        "[ElectricPaid],[ElectricVerified],[RentAmount],[RentPaid],[RentVerified],[GasAmount],[GasPaid],[GasVerified] " +
+                                        "FROM [BashaBariWeb].[dbo].[BillInformation] " +
+                                        "WHERE [TenantEmail] = '" + User.Identity.Name + "' " +
+                                        "ORDER BY [BillTime] DESC";
             //to clear the list initially
-            if (_ownernoticelist.Count > 0)
+            if (_billinformationlist.Count > 0)
             {
-                _ownernoticelist.Clear();
+                _billinformationlist.Clear();
             }
 
             //database operation
@@ -126,18 +127,34 @@ namespace BashaBari.Controllers
             obj.DbConnect();
             while (obj.ExeQuery(queryString).Read())
             {
-                _ownernoticelist.Add(new OwnerNotice
+                _billinformationlist.Add(new BillInformation
                 {
-                    NoticeId = int.Parse(obj.ExeQuery(queryString)["NoticeId"].ToString()),
+                    BillId = int.Parse(obj.ExeQuery(queryString)["BillId"].ToString()),
                     OwnerEmail = obj.ExeQuery(queryString)["OwnerEmail"].ToString(),
-                    NoticeText = obj.ExeQuery(queryString)["NoticeText"].ToString(),
-                    NoticeTime = obj.ExeQuery(queryString)["NoticeTime"].ToString(),
+                    TenantEmail = obj.ExeQuery(queryString)["TenantEmail"].ToString(),
+                    BillTime = obj.ExeQuery(queryString)["BillTime"].ToString(),
+
+                    WaterAmount = obj.ExeQuery(queryString)["WaterAmount"].ToString(),
+                    WaterPaid = obj.ExeQuery(queryString)["WaterPaid"].ToString(),
+                    WaterVerified = obj.ExeQuery(queryString)["WaterVerified"].ToString(),
+
+                    ElectricAmount = obj.ExeQuery(queryString)["ElectricAmount"].ToString(),
+                    ElectricPaid = obj.ExeQuery(queryString)["ElectricPaid"].ToString(),
+                    ElectricVerified = obj.ExeQuery(queryString)["ElectricVerified"].ToString(),
+
+                    RentAmount = obj.ExeQuery(queryString)["RentAmount"].ToString(),
+                    RentPaid = obj.ExeQuery(queryString)["RentPaid"].ToString(),
+                    RentVerified = obj.ExeQuery(queryString)["RentVerified"].ToString(),
+
+                    GasAmount = obj.ExeQuery(queryString)["GasAmount"].ToString(),
+                    GasPaid = obj.ExeQuery(queryString)["GasPaid"].ToString(),
+                    GasVerified = obj.ExeQuery(queryString)["GasVerified"].ToString(),
                 });
             }
             obj.CloseDbConnect();
         }
 
-
+        
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::://
     }
 }

@@ -41,7 +41,8 @@ namespace TBashaBari.Controllers
             return datareader;
         }
 
-        public string getUserFullName(string userEmail) {
+        public string getUserFullName(string userEmail)
+        {
             try
             {
                 DbConnect();
@@ -57,7 +58,7 @@ namespace TBashaBari.Controllers
             catch (Exception)
             {
                 return null;
-            }   
+            }
         }
 
         public string getTenantsOwner(string tenantEmail)
@@ -78,6 +79,28 @@ namespace TBashaBari.Controllers
             {
                 return null;
             }
+        }
+
+        public bool isBillInformationExist(string tenantEmail, string billTime)
+        {
+            DbConnect();
+            queryString.CommandType = CommandType.Text;
+            queryString.CommandText = "SELECT[TenantEmail] FROM [BashaBariWeb].[dbo].[BillInformation] WHERE [BillTime] = '" + billTime + "' AND [TenantEmail] = '" + tenantEmail + "'";
+
+            string tempstr = "";
+            if (queryString.ExecuteScalar() != null)
+            {
+                tempstr = queryString.ExecuteScalar().ToString();
+            }
+            CloseDbConnect();
+
+            bool booltemp = false;
+
+            if (tenantEmail.Equals(tempstr.Trim()))
+            {
+                booltemp = true;
+            }
+            return booltemp;
         }
 
         public void CloseDbConnect()

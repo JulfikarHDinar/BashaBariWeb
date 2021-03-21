@@ -22,6 +22,7 @@ namespace TBashaBari.Models
         public String BillTime { get; set; }
 
         [Required]
+        [RegularExpression(@"^.*[0-9]$", ErrorMessage = "Invalid Water Bill Amount")]
         public String WaterAmount { get; set; }
 
         [Required]
@@ -31,6 +32,7 @@ namespace TBashaBari.Models
         public String WaterVerified { get; set; }
 
         [Required]
+        [RegularExpression(@"^.*[0-9]$", ErrorMessage = "Invalid Electric Bill Amount")]
         public String ElectricAmount { get; set; }
 
         [Required]
@@ -40,6 +42,7 @@ namespace TBashaBari.Models
         public String ElectricVerified { get; set; }
 
         [Required]
+        [RegularExpression(@"^.*[0-9]$", ErrorMessage = "Invalid Rent Amount")]
         public String RentAmount { get; set; }
 
         [Required]
@@ -49,6 +52,7 @@ namespace TBashaBari.Models
         public String RentVerified { get; set; }
 
         [Required]
+        [RegularExpression(@"^.*[0-9]$", ErrorMessage = "Invalid Gas Bill Amount")]
         public String GasAmount { get; set; }
 
         [Required]

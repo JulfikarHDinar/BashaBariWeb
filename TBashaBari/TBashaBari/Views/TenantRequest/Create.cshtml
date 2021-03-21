@@ -7,7 +7,7 @@
 <form method="post" asp-action="Create" class="text-center">
     <div class="border p-3">
         <div class="form-group">
-            <h2 class="text-primary font-weight-bold pl-5">Add a Request</h2>
+            <h2 class="text-primary font-weight-bold">Add a Request</h2>
         </div>
         <input id="today" asp-for="RequestTime" class="form-control" hidden />
         <input asp-for="TenantEmail" class="form-control" value="@UserManager.GetUserName(User)" hidden />

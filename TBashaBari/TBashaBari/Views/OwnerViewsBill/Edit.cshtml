@@ -1,14 +1,47 @@
-﻿@model TBashaBari.Models.OwnerNotice
+﻿@model TBashaBari.Models.BillInformation
 
 <form method="post" class="text-center">
     <div class="border p-3">
         <div class="form-group">
-            <h2 class="text-primary font-weight-bold pl-5">Edit Notice</h2>
+            <h2 class="text-primary font-weight-bold">Edit Bill</h2>
         </div>
-        <input asp-for="NoticeId" hidden />
-        <input id="today" asp-for="NoticeTime" class="form-control" hidden />
-        <input asp-for="OwnerEmail" class="form-control" hidden />
-        <input asp-for="NoticeText" class="form-control text-center py-4" />
+
+        <input asp-for="BillId" class="form-control text-center py-4" hidden />
+        <input asp-for="OwnerEmail" class="form-control text-center py-4" hidden />
+        
+        <label class="font-weight-bold pt-4">Tenant's Email:</label>
+        <input asp-for="TenantEmail" class="form-control text-center py-4" readonly />
+
+        <label class="font-weight-bold pt-4">Year & Month:</label>
+        <input id="today" asp-for="BillTime" class="form-control text-center py-4" readonly />
+
+        <label class="font-weight-bold pt-4">Water Bill Amount:</label>
+        <input asp-for="WaterAmount" class="form-control text-center py-4"/>
+        <input asp-for="WaterPaid" class="form-control text-center py-4" hidden />
+        <input asp-for="WaterVerified" class="form-control text-center py-4" hidden />
+        <span asp-validation-for="WaterAmount" class="text-danger"></span>
+        <br>
+
+        <label class="font-weight-bold pt-4">Electric Bill Amount:</label>
+        <input asp-for="ElectricAmount" class="form-control text-center py-4"/>
+        <input asp-for="ElectricPaid" class="form-control text-center py-4" hidden />
+        <input asp-for="ElectricVerified" class="form-control text-center py-4" hidden />
+        <span asp-validation-for="ElectricAmount" class="text-danger"></span>
+        <br>
+
+        <label class="font-weight-bold pt-4">Gas Bill Amount:</label>
+        <input asp-for="GasAmount" class="form-control text-center py-4"/>
+        <input asp-for="GasPaid" class="form-control text-center py-4" hidden />
+        <input asp-for="GasVerified" class="form-control text-center py-4" hidden />
+        <span asp-validation-for="GasAmount" class="text-danger"></span>
+        <br>
+
+        <label class="font-weight-bold pt-4">Rent Amount:</label>
+        <input asp-for="RentAmount" class="form-control text-center py-4" />
+        <input asp-for="RentPaid" class="form-control text-center py-4" hidden />
+        <input asp-for="RentVerified" class="form-control text-center py-4" hidden />
+        <span asp-validation-for="RentAmount" class="text-danger"></span>
+
         <br>
         <input type="submit" class="btn btn-success w-20 m-2" value="Update" />
         <a asp-action="Index" class="btn btn-primary w-20 m-2">
@@ -18,24 +51,6 @@
     </div>
 </form>
 
-<script>
-    var today = new Date().toISOString().substr(0, 10);
-    var currentTime = new Date();
-    var currentHours = currentTime.getHours();
-    var currentMinutes = currentTime.getMinutes();
-
-    // Pad the currentMinutes with leading zeros, if required
-    currentMinutes = (currentMinutes < 10 ? "0" : "") + currentMinutes;
-
-    // Pad currentHours with leading zeros, if required
-    currentHours = (currentHours < 10 ? "0" : "") + currentHours;
-
-    // Compose the string for display
-    var currentTimeString = currentHours + ":" + currentMinutes;
-
-    // Final Time
-    document.querySelector("#today").value = today + " at " + currentTimeString + "  [Edited]";
-</script>
 
 @section Scripts{
     @{
