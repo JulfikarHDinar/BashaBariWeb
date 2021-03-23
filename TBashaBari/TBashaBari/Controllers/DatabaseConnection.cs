@@ -103,6 +103,50 @@ namespace TBashaBari.Controllers
             return booltemp;
         }
 
+        public bool isTenantConnected(string tenantEmail)
+        {
+            DbConnect();
+            queryString.CommandType = CommandType.Text;
+            queryString.CommandText = "SELECT [TenantEmail] FROM [BashaBariWeb].[dbo].[TenantConnectsOwner] WHERE [TenantEmail] = '" + tenantEmail + "' AND [IsConfirmed] = 'Yes'";
+
+            string tempstr = "";
+            if (queryString.ExecuteScalar() != null)
+            {
+                tempstr = queryString.ExecuteScalar().ToString();
+            }
+            CloseDbConnect();
+
+            bool booltemp = false;
+
+            if (tenantEmail.Equals(tempstr.Trim()))
+            {
+                booltemp = true;
+            }
+            return booltemp;
+        }
+
+        public bool isOwnerConnected(string ownerEmail)
+        {
+            DbConnect();
+            queryString.CommandType = CommandType.Text;
+            queryString.CommandText = "SELECT TOP 1 [OwnerEmail] FROM [BashaBariWeb].[dbo].[TenantConnectsOwner] WHERE [OwnerEmail] = '" + ownerEmail + "' AND [IsConfirmed] = 'Yes'";
+
+            string tempstr = "";
+            if (queryString.ExecuteScalar() != null)
+            {
+                tempstr = queryString.ExecuteScalar().ToString();
+            }
+            CloseDbConnect();
+
+            bool booltemp = false;
+
+            if (ownerEmail.Equals(tempstr.Trim()))
+            {
+                booltemp = true;
+            }
+            return booltemp;
+        }
+
         public void CloseDbConnect()
         {
             conn.Close();
