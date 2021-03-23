@@ -11,6 +11,10 @@
                 <a id="manage" class="nav-link text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
             </li>*@
         <li class="nav-item">
+            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+            <hr />
+        </li>
+        <li class="nav-item">
             <a id="manage" class="nav-link text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profile</a>
             <hr />
         </li>
@@ -40,6 +44,10 @@
     }
     else if (SignInManager.IsSignedIn(User) && User.IsInRole(TBashaBari.WebConstant.TenantRole))
     {
+        <li class="nav-item">
+            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+            <hr />
+        </li>
         <li class="nav-item">
             <a id="manage" class="nav-link text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profile</a>
             <hr />
