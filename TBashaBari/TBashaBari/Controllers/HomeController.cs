@@ -25,10 +25,6 @@ namespace TBashaBari.Controllers
         List<BillInformation> owner_billinformationlist = new List<BillInformation>();
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IEmailSender _emailSender;
-        List<OwnerNotice> _ownernoticelist = new List<OwnerNotice>();
-        List<TenantRequest> _tenantrequestlist = new List<TenantRequest>();
-        List<TenantConnectsOwner> _tenantconnectsownerlist = new List<TenantConnectsOwner>();
-        List<BillInformation> _billinformationlist = new List<BillInformation>();
         [BindProperty]
         public ContactUsVM ContactUsVM
         {
@@ -40,8 +36,6 @@ namespace TBashaBari.Controllers
         List<TenantRequest> tenant_tenantrequestlist = new List<TenantRequest>();
         List<TenantConnectsOwner> tenant_tenantconnectsownerlist = new List<TenantConnectsOwner>();
         List<BillInformation> tenant_billinformationlist = new List<BillInformation>();
-
-        public HomeController(ILogger<HomeController> logger)
 
         public HomeController(ILogger<HomeController> logger, 
             IWebHostEnvironment webHostEnvironment, 
@@ -382,10 +376,7 @@ namespace TBashaBari.Controllers
             {
                 HtmlBody = sr.ReadToEnd();
             }
-            //Name: { 0}
-            //Email: { 1}
-            //Phone: { 2}
-            //Message: {3}
+          
 
             StringBuilder message = new StringBuilder();
 
