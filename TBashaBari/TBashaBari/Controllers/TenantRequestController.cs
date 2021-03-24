@@ -112,9 +112,10 @@ namespace BashaBari.Controllers
         private void FetchTenantRequest()
         {
             //User.Identity.Name returns current logged in user's email
-            string queryString = "SELECT TOP 1000 [RequestId],[TenantEmail],[RequestText],[RequestTime],[CommentOnRequestText],[CommentOnRequestTime] " +
-                                        "FROM [BashaBariWeb].[dbo].[TenantRequest] " +
-                                        "WHERE [TenantEmail] = '" + User.Identity.Name + "' " +
+            string queryString = "SELECT TOP 1000 T.[RequestId],T.[TenantEmail],T.[RequestText],T.[RequestTime],T.[CommentOnRequestText],T.[CommentOnRequestTime],C.[TenantEmail],C.[IsConfirmed]" +
+                                        "FROM [BashaBariWeb].[dbo].[TenantConnectsOwner] C JOIN [BashaBariWeb].[dbo].[TenantRequest] T " +
+                                        "ON C.[TenantEmail] = T.[TenantEmail] " +
+                                        "WHERE C.[IsConfirmed] = 'Yes' AND C.[TenantEmail] = '" + User.Identity.Name + "' " +
                                         "ORDER BY [RequestTime] DESC";
             //to clear the list initially
             if (_tenantrequestlist.Count > 0)

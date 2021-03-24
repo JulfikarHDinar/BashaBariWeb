@@ -69,10 +69,19 @@ namespace TBashaBari.Controllers
                 queryString.CommandType = CommandType.Text;
                 queryString.Parameters.Add("FullName", SqlDbType.VarChar).Value = tenantEmail;
                 queryString.CommandText = "SELECT [OwnerEmail] FROM [BashaBariWeb].[dbo].[TenantConnectsOwner] WHERE [TenantEmail] = '" + tenantEmail + "'";
-                string ownerEmail = queryString.ExecuteScalar().ToString();
-                CloseDbConnect();
 
-                return ownerEmail;
+                if (queryString.ExecuteScalar() != null)
+                {
+                    string ownerEmail = queryString.ExecuteScalar().ToString();
+
+                    CloseDbConnect();
+
+                    return ownerEmail;
+                }
+                else {
+                    CloseDbConnect();
+                    return null;
+                }
 
             }
             catch (Exception)
