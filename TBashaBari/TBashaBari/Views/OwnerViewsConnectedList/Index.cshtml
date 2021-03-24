@@ -12,6 +12,13 @@
         string FullName = ob.getUserFullName(_Email);
         return FullName;
     }
+    string GetUserPhoneNumber(string _Email)
+    {
+        //database operation to get current tenants's fullname
+        DatabaseConnection ob = new DatabaseConnection();
+        string PhoneNumber = ob.getUserPhoneNumber(_Email);
+        return PhoneNumber;
+    }
 
 }
 
@@ -36,35 +43,38 @@
                             </div>
                         </div>
                         <div class="col-sm-10">
-                            <div class="card-body">
-                                <div class="d-flex w-100 justify-content-between">
-                                    @{if (obj.IsConfirmed == "No")
-                                        {
-                                            <h5 class="font-weight-bold">[Pending] @GetUserFullName(obj.TenantEmail) </h5>
-                                        }
-                                        else
-                                        {
-                                            <h5 class="font-weight-bold">@GetUserFullName(obj.TenantEmail) </h5>
-                                        }
-                                    }
-                                </div>
-                                <small>[ Email: @obj.TenantEmail ]</small>
-                                <p class="my-4 ml-2"></p>
+                                <div class="card-body">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        @{if (obj.IsConfirmed == "No")
+                                            {
+                                                <h5 class="font-weight-bold">[Pending] @GetUserFullName(obj.TenantEmail) </h5>
+                                            }
+                                            else
+                                            {
+                                                <h5 class="font-weight-bold">@GetUserFullName(obj.TenantEmail) </h5>
 
-                                <div class="text-lg-right">
-                                    @{if (obj.IsConfirmed == "No")
-                                        {
-                                            <a asp-controller="OwnerViewsConnectedList" asp-route-Id="@obj.ConnectionId" asp-action="Edit" class="btn btn-primary mx-2">
-                                                Accept
-                                            </a>
+                                            }
                                         }
-                                    }
-                                    <a asp-controller="OwnerViewsConnectedList" asp-route-Id="@obj.ConnectionId" asp-action="Delete" class="btn btn-danger mx-2">
-                                        Remove
-                                    </a>
-                                </div>
+                                    </div>
+                                    <small>[ Email: @obj.TenantEmail ]</small>
+                                    <br />
+                                    <small>[ Phone: @GetUserPhoneNumber(obj.TenantEmail) ]</small>
+                                    <p class="my-4 ml-2"></p>
 
-                            </div>
+                                    <div class="text-lg-right">
+                                        @{if (obj.IsConfirmed == "No")
+                                            {
+                                                <a asp-controller="OwnerViewsConnectedList" asp-route-Id="@obj.ConnectionId" asp-action="Edit" class="btn btn-primary mx-2">
+                                                    Accept
+                                                </a>
+                                            }
+                                        }
+                                        <a asp-controller="OwnerViewsConnectedList" asp-route-Id="@obj.ConnectionId" asp-action="Delete" class="btn btn-danger mx-2">
+                                            Remove
+                                        </a>
+                                    </div>
+
+                                </div>
                         </div>
                     </div>
                 </div>

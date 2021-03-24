@@ -12,6 +12,13 @@
         string FullName = ob.getUserFullName(_Email);
         return FullName;
     }
+    string GetUserPhoneNumber(string _Email)
+    {
+        //database operation to get current tenants's fullname
+        DatabaseConnection ob = new DatabaseConnection();
+        string PhoneNumber = ob.getUserPhoneNumber(_Email);
+        return PhoneNumber;
+    }
 
 }
 
@@ -46,6 +53,8 @@
                                             {
                                                 <h5 class="font-weight-bold">@GetUserFullName(obj.OwnerEmail) </h5>
                                                 <small>[ Email: @obj.OwnerEmail ]</small>
+                                                <br />
+                                                <small>[ Phone: @GetUserPhoneNumber(obj.OwnerEmail) ]</small>
                                             }
                                         }
                                     </div>

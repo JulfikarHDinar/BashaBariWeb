@@ -12,6 +12,19 @@
         string FullName = ob.getUserFullName(_Email);
         return FullName;
     }
+    bool IsEmailConfirmed(string _email)
+    {
+        DatabaseConnection ob = new DatabaseConnection();
+        bool booltemp = ob.isEmailConfirmed(_email);
+        return booltemp;
+    }
+    string GetUserPhoneNumber(string _Email)
+    {
+        //database operation to get current tenants's fullname
+        DatabaseConnection ob = new DatabaseConnection();
+        string PhoneNumber = ob.getUserPhoneNumber(_Email);
+        return PhoneNumber;
+    }
 }
 
 <head>
@@ -151,7 +164,7 @@
     </style>
 </head>
 <body>
-    @if (SignInManager.IsSignedIn(User) && User.IsInRole(TBashaBari.WebConstant.OwnerRole))
+    @if (SignInManager.IsSignedIn(User) && User.IsInRole(TBashaBari.WebConstant.OwnerRole) && IsEmailConfirmed(UserManager.GetUserName(User)) == true)
     {
         <!--:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
         <!--::::::::::::::::::::::::::::::         Owner        :::::::::::::::::::::::::::::::::-->
@@ -236,40 +249,6 @@
             <!--::::::::::::::::::::::::::::::::::::::       Row      ::::::::::::::::::::::::::::::::::::::::::::::::-->
             <div class="row">
                 <!--::::::::::::::::::::::::::::::::::::::       Col      ::::::::::::::::::::::::::::::::::::::::::::::::-->
-                <div class="col-sm-5 px-5">
-                    <h5 class="text-primary font-weight-bold">Recent Bill</h5>
-                    @{
-                        if (Model.Bill_Owner.Count != 0)
-                        {
-                            <div class="overflow-auto" style="max-width: 1000px; max-height: 250px;">
-                                @foreach (var obj in Model.Bill_Owner)
-                                {
-                                    <div class="card m-3" style="background-color: gainsboro">
-                                        <div class="row no-gutters">
-                                            <div class="col-sm-10">
-                                                <div class="card-body">
-                                                    <div class="d-flex w-100 justify-content-between">
-                                                        <p class="font-weight-bold">@GetUserFullName(obj.TenantEmail) </p>
-                                                        <small>@obj.BillTime</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                            </div>
-                        }
-                        else
-                        {
-                            <h5 class="p-4">No bill history to show</h5>
-                        }
-                    }
-                    <a asp-controller="OwnerViewsBill" asp-action="Index" class="btn btn-primary px-3 m-3">
-                        See All
-                    </a>
-                    <br />  <br />
-                </div>
-                <!--::::::::::::::::::::::::::::::::::::::       Col      ::::::::::::::::::::::::::::::::::::::::::::::::-->
                 <div class="col-sm-7 px-5">
                     <h5 class="text-primary font-weight-bold">Recent Requests</h5>
                     @{
@@ -305,10 +284,44 @@
                     </a>
                     <br />  <br />
                 </div>
+                <!--::::::::::::::::::::::::::::::::::::::       Col      ::::::::::::::::::::::::::::::::::::::::::::::::-->
+                <div class="col-sm-5 px-5">
+                    <h5 class="text-primary font-weight-bold">Recent Bill</h5>
+                    @{
+                        if (Model.Bill_Owner.Count != 0)
+                        {
+                            <div class="overflow-auto" style="max-width: 1000px; max-height: 250px;">
+                                @foreach (var obj in Model.Bill_Owner)
+                                {
+                                    <div class="card m-3" style="background-color: gainsboro">
+                                        <div class="row no-gutters">
+                                            <div class="col-sm-10">
+                                                <div class="card-body">
+                                                    <div class="d-flex w-100 justify-content-between">
+                                                        <p class="font-weight-bold">@GetUserFullName(obj.TenantEmail) </p>
+                                                        <small>@obj.BillTime</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <h5 class="p-4">No bill history to show</h5>
+                        }
+                    }
+                    <a asp-controller="OwnerViewsBill" asp-action="Index" class="btn btn-primary px-3 m-3">
+                        See All
+                    </a>
+                    <br />  <br />
+                </div>
             </div>
         </div>
     }
-    else if (SignInManager.IsSignedIn(User) && User.IsInRole(TBashaBari.WebConstant.TenantRole))
+    else if (SignInManager.IsSignedIn(User) && User.IsInRole(TBashaBari.WebConstant.TenantRole) && IsEmailConfirmed(UserManager.GetUserName(User)) == true)
     {
         <!--:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
         <!--::::::::::::::::::::::::::::::        Tenant        :::::::::::::::::::::::::::::::::-->
@@ -376,6 +389,8 @@
                                                             {
                                                                 <h5 class="font-weight-bold">@GetUserFullName(obj.OwnerEmail) </h5>
                                                                 <small>[ Email: @obj.OwnerEmail ]</small>
+                                                                <br />
+                                                                <small>[ Phone: @GetUserPhoneNumber(obj.OwnerEmail) ]</small>
                                                             }
                                                         }
                                                     </div>
@@ -400,40 +415,6 @@
 
             <!--::::::::::::::::::::::::::::::::::::::       Row      ::::::::::::::::::::::::::::::::::::::::::::::::-->
             <div class="row">
-                <!--::::::::::::::::::::::::::::::::::::::       Col      ::::::::::::::::::::::::::::::::::::::::::::::::-->
-                <div class="col-sm-5 px-5">
-                    <h5 class="text-primary font-weight-bold">Recent Bill</h5>
-                    @{
-                        if (Model.Bill_Tenant.Count != 0)
-                        {
-                            <div class="overflow-auto" style="max-width: 1000px; max-height: 250px;">
-                                @foreach (var obj in Model.Bill_Tenant)
-                                {
-                                    <div class="card m-3" style="background-color: gainsboro">
-                                        <div class="row no-gutters">
-                                            <div class="col-sm-10">
-                                                <div class="card-body">
-                                                    <div class="d-flex w-100 justify-content-between">
-                                                        <p class="font-weight-bold">@GetUserFullName(obj.TenantEmail) </p>
-                                                        <small>@obj.BillTime</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                            </div>
-                        }
-                        else
-                        {
-                            <h5 class="p-4">No bill history to show</h5>
-                        }
-                    }
-                    <a asp-controller="TenantViewsBill" asp-action="Index" class="btn btn-primary px-3 m-3">
-                        See All
-                    </a>
-                    <br />  <br />
-                </div>
                 <!--::::::::::::::::::::::::::::::::::::::       Col      ::::::::::::::::::::::::::::::::::::::::::::::::-->
                 <div class="col-sm-7 px-5">
                     <h5 class="text-primary font-weight-bold">Recent Requests</h5>
@@ -470,8 +451,47 @@
                     </a>
                     <br />  <br />
                 </div>
+                <!--::::::::::::::::::::::::::::::::::::::       Col      ::::::::::::::::::::::::::::::::::::::::::::::::-->
+                <div class="col-sm-5 px-5">
+                    <h5 class="text-primary font-weight-bold">Recent Bill</h5>
+                    @{
+                        if (Model.Bill_Tenant.Count != 0)
+                        {
+                            <div class="overflow-auto" style="max-width: 1000px; max-height: 250px;">
+                                @foreach (var obj in Model.Bill_Tenant)
+                                {
+                                    <div class="card m-3" style="background-color: gainsboro">
+                                        <div class="row no-gutters">
+                                            <div class="col-sm-10">
+                                                <div class="card-body">
+                                                    <div class="d-flex w-100 justify-content-between">
+                                                        <p class="font-weight-bold">@GetUserFullName(obj.TenantEmail) </p>
+                                                        <small>@obj.BillTime</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <h5 class="p-4">No bill history to show</h5>
+                        }
+                    }
+                    <a asp-controller="TenantViewsBill" asp-action="Index" class="btn btn-primary px-3 m-3">
+                        See All
+                    </a>
+                    <br />  <br />
+                </div>
             </div>
         </div>
+    }
+    else if (SignInManager.IsSignedIn(User) && IsEmailConfirmed(UserManager.GetUserName(User)) == false)
+    {
+        <h3 class="text-primary font-weight-bold mb-5">Hello @GetUserFullName(UserManager.GetUserName(User))!</h3>
+        <h5 class="font-weight-bold">A email has been sent to @UserManager.GetUserName(User). Confirm your email to proceed further. </h5>
     }
     else
     {

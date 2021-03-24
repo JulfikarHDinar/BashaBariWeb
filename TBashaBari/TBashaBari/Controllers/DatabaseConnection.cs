@@ -156,6 +156,47 @@ namespace TBashaBari.Controllers
             return booltemp;
         }
 
+        public bool isEmailConfirmed(string _Email)
+        {
+            DbConnect();
+            queryString.CommandType = CommandType.Text;
+            queryString.CommandText = "SELECT [Email] FROM [BashaBariWeb].[dbo].[AspNetUsers] WHERE [Email] = '" + _Email + "' AND [EmailConfirmed] = '1'";
+
+            string tempstr = "";
+            if (queryString.ExecuteScalar() != null)
+            {
+                tempstr = queryString.ExecuteScalar().ToString();
+            }
+            CloseDbConnect();
+
+            bool booltemp = false;
+
+            if (_Email.Equals(tempstr.Trim()))
+            {
+                booltemp = true;
+            }
+            return booltemp;
+        }
+        public string getUserPhoneNumber(string userEmail)
+        {
+            try
+            {
+                DbConnect();
+                queryString.CommandType = CommandType.Text;
+                queryString.Parameters.Add("PhoneNumber", SqlDbType.VarChar).Value = userEmail;
+                queryString.CommandText = "SELECT [PhoneNumber] FROM [BashaBariWeb].[dbo].[AspNetUsers] WHERE [UserName] = '" + userEmail + "'";
+                string userPhoneNumber = queryString.ExecuteScalar().ToString();
+                CloseDbConnect();
+
+                return userPhoneNumber;
+
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public void CloseDbConnect()
         {
             conn.Close();
