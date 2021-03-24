@@ -165,10 +165,10 @@
                 <div class="col-sm-7 px-5">
                     <h5 class="text-primary font-weight-bold">Recent Notices</h5>
                     @{
-                        if (Model.Notice.Count != 0)
+                        if (Model.Notice_Owner.Count != 0)
                         {
                             <div class="overflow-auto" style="max-width: 1000px; max-height: 250px;">
-                                @foreach (var obj in Model.Notice)
+                                @foreach (var obj in Model.Notice_Owner)
                                 {
                                     <div class="card m-3" style="background-color: gainsboro">
                                         <div class="row no-gutters">
@@ -189,7 +189,7 @@
                         }
                         else
                         {
-                            <h5 class="p-4">You haven't posted any notice yet.</h5>
+                            <h5 class="p-4">No Notices to show</h5>
                         }
                     }
                     <a asp-controller="OwnerNotice" asp-action="Index" class="btn btn-primary px-3 m-3">
@@ -201,10 +201,10 @@
                 <div class="col-sm-5 px-5">
                     <h5 class="text-primary font-weight-bold">Pending Tenant</h5>
                     @{
-                        if (Model.Connect.Count != 0)
+                        if (Model.Connect_Owner.Count != 0)
                         {
                             <div class="overflow-auto" style="max-width: 1000px; max-height: 250px;">
-                                @foreach (var obj in Model.Connect)
+                                @foreach (var obj in Model.Connect_Owner)
                                 {
                                     <div class="card m-3" style="background-color: gainsboro">
                                         <div class="row no-gutters">
@@ -223,7 +223,7 @@
                         }
                         else
                         {
-                            <h5 class="p-4">You are not connected to any Tenants</h5>
+                            <h5 class="p-4">No pending Tenants</h5>
                         }
                     }
                     <a asp-controller="OwnerViewsConnectedList" asp-action="Index" class="btn btn-primary px-3 m-3">
@@ -239,10 +239,10 @@
                 <div class="col-sm-5 px-5">
                     <h5 class="text-primary font-weight-bold">Recent Bill</h5>
                     @{
-                        if (Model.Bill.Count != 0)
+                        if (Model.Bill_Owner.Count != 0)
                         {
                             <div class="overflow-auto" style="max-width: 1000px; max-height: 250px;">
-                                @foreach (var obj in Model.Bill)
+                                @foreach (var obj in Model.Bill_Owner)
                                 {
                                     <div class="card m-3" style="background-color: gainsboro">
                                         <div class="row no-gutters">
@@ -261,7 +261,7 @@
                         }
                         else
                         {
-                            <h5 class="p-4">You haven't posted any bills yet.</h5>
+                            <h5 class="p-4">No bill history to show</h5>
                         }
                     }
                     <a asp-controller="OwnerViewsBill" asp-action="Index" class="btn btn-primary px-3 m-3">
@@ -273,10 +273,10 @@
                 <div class="col-sm-7 px-5">
                     <h5 class="text-primary font-weight-bold">Recent Requests</h5>
                     @{
-                        if (Model.Request.Count != 0)
+                        if (Model.Request_Owner.Count != 0)
                         {
                             <div class="overflow-auto" style="max-width: 1000px; max-height: 250px;">
-                                @foreach (var obj in Model.Request)
+                                @foreach (var obj in Model.Request_Owner)
                                 {
                                     <div class="card m-3" style="background-color: gainsboro">
                                         <div class="row no-gutters">
@@ -297,7 +297,7 @@
                         }
                         else
                         {
-                            <h5 class="p-4">You are not connected to any Tenants</h5>
+                            <h5 class="p-4">No Requests to show</h5>
                         }
                     }
                     <a asp-controller="OwnerViewsRequest" asp-action="Index" class="btn btn-primary px-3 m-3">
@@ -313,7 +313,165 @@
         <!--:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
         <!--::::::::::::::::::::::::::::::        Tenant        :::::::::::::::::::::::::::::::::-->
         <!--:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
-        <p>processing</p>
+        <div class="container p-3 justify-content-between">
+            <h3 class="text-primary font-weight-bold mb-5">Welcome @GetUserFullName(UserManager.GetUserName(User))!</h3>
+            <br />
+            <!--::::::::::::::::::::::::::::::::::::::       Row      ::::::::::::::::::::::::::::::::::::::::::::::::-->
+            <div class="row">
+                <!--::::::::::::::::::::::::::::::::::::::       Col      ::::::::::::::::::::::::::::::::::::::::::::::::-->
+                <div class="col-sm-7 px-5">
+                    <h5 class="text-primary font-weight-bold">Recent Notices</h5>
+                    @{
+                        if (Model.Notice_Tenant.Count != 0)
+                        {
+                            <div class="overflow-auto" style="max-width: 1000px; max-height: 250px;">
+                                @foreach (var obj in Model.Notice_Tenant)
+                                {
+                                    <div class="card m-3" style="background-color: gainsboro">
+                                        <div class="row no-gutters">
+                                            <div class="col-sm-10">
+                                                <div class="card-body">
+                                                    <div class="d-flex w-100 justify-content-between">
+                                                        <p class="font-weight-bold">@GetUserFullName(obj.OwnerEmail) </p>
+                                                        <small>@obj.NoticeTime</small>
+                                                    </div>
+                                                    <small>@obj.NoticeText</small>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <h5 class="p-4">No Notices to show</h5>
+                        }
+                    }
+                    <a asp-controller="TenantViewsNotice" asp-action="Index" class="btn btn-primary px-3 m-3">
+                        View More
+                    </a>
+                    <br />  <br />
+                </div>
+                <!--::::::::::::::::::::::::::::::::::::::       Col      ::::::::::::::::::::::::::::::::::::::::::::::::-->
+                <div class="col-sm-5 px-5">
+                    <h5 class="text-primary font-weight-bold">Owner</h5>
+                    @{
+                        if (Model.Connect_Tenant.Count != 0)
+                        {
+                            <div class="overflow-auto" style="max-width: 1000px; max-height: 250px;">
+                                @foreach (var obj in Model.Connect_Tenant)
+                                {
+                                    <div class="card m-3" style="background-color: gainsboro">
+                                        <div class="row no-gutters">
+                                            <div class="col-sm-10">
+                                                <div class="card-body">
+                                                    <div class="w-100">
+                                                        @{if (obj.IsConfirmed == "No")
+                                                            {
+                                                                <h5 class="font-weight-bold">[Pending Owner] @obj.OwnerEmail </h5>
+                                                            }
+                                                            else
+                                                            {
+                                                                <h5 class="font-weight-bold">@GetUserFullName(obj.OwnerEmail) </h5>
+                                                                <small>[ Email: @obj.OwnerEmail ]</small>
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <h5 class="p-4">No Owner added</h5>
+                        }
+                    }
+                    <a asp-controller="TenantViewsConnectedList" asp-action="Index" class="btn btn-primary px-3 m-3">
+                        View
+                    </a>
+                    <br />  <br />
+                </div>
+            </div>
+
+            <!--::::::::::::::::::::::::::::::::::::::       Row      ::::::::::::::::::::::::::::::::::::::::::::::::-->
+            <div class="row">
+                <!--::::::::::::::::::::::::::::::::::::::       Col      ::::::::::::::::::::::::::::::::::::::::::::::::-->
+                <div class="col-sm-5 px-5">
+                    <h5 class="text-primary font-weight-bold">Recent Bill</h5>
+                    @{
+                        if (Model.Bill_Tenant.Count != 0)
+                        {
+                            <div class="overflow-auto" style="max-width: 1000px; max-height: 250px;">
+                                @foreach (var obj in Model.Bill_Tenant)
+                                {
+                                    <div class="card m-3" style="background-color: gainsboro">
+                                        <div class="row no-gutters">
+                                            <div class="col-sm-10">
+                                                <div class="card-body">
+                                                    <div class="d-flex w-100 justify-content-between">
+                                                        <p class="font-weight-bold">@GetUserFullName(obj.TenantEmail) </p>
+                                                        <small>@obj.BillTime</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <h5 class="p-4">No bill history to show</h5>
+                        }
+                    }
+                    <a asp-controller="TenantViewsBill" asp-action="Index" class="btn btn-primary px-3 m-3">
+                        See All
+                    </a>
+                    <br />  <br />
+                </div>
+                <!--::::::::::::::::::::::::::::::::::::::       Col      ::::::::::::::::::::::::::::::::::::::::::::::::-->
+                <div class="col-sm-7 px-5">
+                    <h5 class="text-primary font-weight-bold">Recent Requests</h5>
+                    @{
+                        if (Model.Request_Tenant.Count != 0)
+                        {
+                            <div class="overflow-auto" style="max-width: 1000px; max-height: 250px;">
+                                @foreach (var obj in Model.Request_Tenant)
+                                {
+                                    <div class="card m-3" style="background-color: gainsboro">
+                                        <div class="row no-gutters">
+                                            <div class="col-sm-10">
+                                                <div class="card-body">
+                                                    <div class="d-flex w-100 justify-content-between">
+                                                        <p class="font-weight-bold">@GetUserFullName(obj.TenantEmail) </p>
+                                                        <small>@obj.RequestTime</small>
+                                                    </div>
+                                                    <small>@obj.RequestText</small>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <h5 class="p-4">No Requests to show</h5>
+                        }
+                    }
+                    <a asp-controller="TenantRequest" asp-action="Index" class="btn btn-primary px-3 m-3">
+                        View More
+                    </a>
+                    <br />  <br />
+                </div>
+            </div>
+        </div>
     }
     else
     {
