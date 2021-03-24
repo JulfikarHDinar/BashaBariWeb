@@ -9,5 +9,6 @@ namespace TBashaBari
     {
         public static string OwnerRole = "Owner";
         public static string TenantRole = "Tenant";
+        public const string EmailAdmin = "170204035@aust.edu";
     }
 }

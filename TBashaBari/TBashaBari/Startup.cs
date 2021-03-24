@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TBashaBari.Data;
+using Utility;
 
 namespace TBashaBari
 {
@@ -42,7 +44,10 @@ namespace TBashaBari
                 )
                 .AddDefaultTokenProviders().AddDefaultUI()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            
+            services.AddTransient<IEmailSender, EmailSender>();
+
+            services.AddDistributedMemoryCache();
+            services.AddHttpContextAccessor();
             services.AddControllersWithViews();
         }
 

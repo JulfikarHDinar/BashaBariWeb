@@ -8,20 +8,38 @@ using System.Threading.Tasks;
 using TBashaBari.Models;
 using TBashaBari.Controllers;
 using System.Dynamic;
+using TBashaBari.Models.ViewModel;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using System.Text;
 
 namespace TBashaBari.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IEmailSender _emailSender;
         List<OwnerNotice> _ownernoticelist = new List<OwnerNotice>();
         List<TenantRequest> _tenantrequestlist = new List<TenantRequest>();
         List<TenantConnectsOwner> _tenantconnectsownerlist = new List<TenantConnectsOwner>();
         List<BillInformation> _billinformationlist = new List<BillInformation>();
+        [BindProperty]
+        public ContactUsVM ContactUsVM
+        {
+            get;
+            set;
+        }
 
-        public HomeController(ILogger<HomeController> logger)
+
+        public HomeController(ILogger<HomeController> logger, 
+            IWebHostEnvironment webHostEnvironment, 
+            IEmailSender emailSender)
         {
             _logger = logger;
+            _webHostEnvironment = webHostEnvironment;
+            _emailSender = emailSender;
         }
 
         public IActionResult Index()
@@ -190,7 +208,53 @@ namespace TBashaBari.Controllers
             }
             obj.CloseDbConnect();
         }
+        public IActionResult ContactUs()
+        {
+            //var userId = User.FindFirstValue(ClaimTypes.Name);
+            ContactUsVM = new ContactUsVM();
+            return View(ContactUsVM);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("ContactUs")]
+        public async Task<IActionResult> ContactUsPost(ContactUsVM ContactUsVM)
+        {
+            var PathToTemplate = _webHostEnvironment.WebRootPath + Path.DirectorySeparatorChar.ToString()
+                + "templates" + Path.DirectorySeparatorChar.ToString() +
+                "ContactMail.html";
+
+            var subject = ContactUsVM.Subject;
+            string HtmlBody = "";
+            using (StreamReader sr = System.IO.File.OpenText(PathToTemplate))
+            {
+                HtmlBody = sr.ReadToEnd();
+            }
+            //Name: { 0}
+            //Email: { 1}
+            //Phone: { 2}
+            //Message: {3}
+
+            StringBuilder message = new StringBuilder();
+
+            message.Append(ContactUsVM.Message);
+
+
+            string messageBody = string.Format(HtmlBody,
+                ContactUsVM.ApplicationUser.FullName,
+                ContactUsVM.ApplicationUser.Email,
+                ContactUsVM.ApplicationUser.PhoneNumber,
+                message.ToString());
+
+            await _emailSender.SendEmailAsync(WebConstant.EmailAdmin, subject, messageBody);
+
+            return RedirectToAction(nameof(Index));
+        }
+
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
+
+
+    
 }
